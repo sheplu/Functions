@@ -1,5 +1,7 @@
 'use strict';
 
+// add root json for every project
+
 var jsonUpdate = {
   'selector' : `div ul li`,
   'value' : `<li>new liste 1</li>`
@@ -12,8 +14,12 @@ var jsonUpdateAll = {
 
 //use classLIst add to push a new standard class
 var jsonCSS = {
-  'selector' : `p, li`,
+  'selector' : `p`,
   'className' : `customHidden`
+}
+
+var jsonLocation = {
+  'link' : '/test/'
 }
 
 function findAndReplace(jsonObject) {
@@ -45,6 +51,10 @@ function addStyle() {
   for (var i = 0; i < elemList.length; i++) {
     elemList[i].style.visibility = "hidden";
   }
+}
+
+function fetchLocation(jsonObject) {
+  document.querySelector('img').setAttribute('href', jsonObject.link)
 }
 
 findAndReplace(jsonUpdate);
