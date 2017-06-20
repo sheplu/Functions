@@ -12,7 +12,7 @@ var jsonUpdateAll = {
 
 //use classLIst add to push a new standard class
 var jsonCSS = {
-  'selector' : `p`,
+  'selector' : `p, li`,
   'className' : `customHidden`
 }
 
@@ -33,6 +33,13 @@ function findAndAddStyle(jsonObject) {
   elem.setAttribute('class', jsonObject.className);
 }
 
+function findAndAddStyleAll(jsonObject) {
+  var elemList = document.querySelectorAll(jsonObject.selector);
+  for (var i = 0; i < elemList.length; i++) {
+    elemList[i].setAttribute('class', jsonObject.className);
+  }
+}
+
 function addStyle() {
   var elemList = document.querySelectorAll(".customHidden");
   for (var i = 0; i < elemList.length; i++) {
@@ -43,4 +50,5 @@ function addStyle() {
 findAndReplace(jsonUpdate);
 findAndReplaceAll(jsonUpdateAll);
 findAndAddStyle(jsonCSS);
+findAndAddStyleAll(jsonCSS);
 addStyle();
