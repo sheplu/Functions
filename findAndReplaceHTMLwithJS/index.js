@@ -13,8 +13,7 @@ var jsonUpdateAll = {
 //use classLIst add to push a new standard class
 var jsonCSS = {
   'selector' : `p`,
-  'attribute' : `color`,
-  'value' : `#000000`
+  'className' : `customHidden`
 }
 
 function findAndReplace(jsonObject) {
@@ -31,9 +30,17 @@ function findAndReplaceAll(jsonObject) {
 
 function findAndAddStyle(jsonObject) {
   var elem = document.querySelector(jsonObject.selector);
-  elem.setAttribute(jsonObject.attribute, jsonObject.value)
+  elem.setAttribute('class', jsonObject.className);
+}
+
+function addStyle() {
+  var elemList = document.querySelectorAll(".customHidden");
+  for (var i = 0; i < elemList.length; i++) {
+    elemList[i].style.visibility = "hidden";
+  }
 }
 
 findAndReplace(jsonUpdate);
 findAndReplaceAll(jsonUpdateAll);
 findAndAddStyle(jsonCSS);
+addStyle();
