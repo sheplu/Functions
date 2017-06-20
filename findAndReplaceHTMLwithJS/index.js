@@ -10,6 +10,13 @@ var jsonUpdateAll = {
   'value' : `<li>new liste 1</li>`
 }
 
+//use classLIst add to push a new standard class
+var jsonCSS = {
+  'selector' : `p`,
+  'attribute' : `color`,
+  'value' : `#000000`
+}
+
 function findAndReplace(jsonObject) {
   var elem = document.querySelector(jsonObject.selector);
   elem.innerHTML = jsonObject.value;
@@ -22,5 +29,11 @@ function findAndReplaceAll(jsonObject) {
   }
 }
 
+function findAndAddStyle(jsonObject) {
+  var elem = document.querySelector(jsonObject.selector);
+  elem.setAttribute(jsonObject.attribute, jsonObject.value)
+}
+
 findAndReplace(jsonUpdate);
 findAndReplaceAll(jsonUpdateAll);
+findAndAddStyle(jsonCSS);
