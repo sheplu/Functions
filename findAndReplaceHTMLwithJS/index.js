@@ -23,8 +23,33 @@ var jsonLocation = {
   'link' : '/test/'
 }
 
+var jsonPage = {
+  update : [{
+    'selector' : `div ul li`,
+    'value' : `<li>new liste 1</li>`
+  }],
+  remove : [{
+    'selector' : `p`,
+    'className' : `customHidden`
+  }]
+}
+
 var paramsURL = {};
 
+function updatePage(jsonObject) {
+  for (var i = 0; i < jsonObject.update.length; i++) {
+    var elem = document.querySelector(jsonObject.update[i].selector);
+    elem.innerHTML = jsonObject.update[i].value;
+  }
+  for (var i = 0; i < jsonObject.remove.length; i++) {
+    var elem = document.querySelector(jsonObject.remove[i].selector);
+    elem.className += ' '+jsonObject.remove[i].className;
+  }
+  var elemList = document.querySelectorAll(".customHidden");
+  for (var i = 0; i < elemList.length; i++) {
+    elemList[i].style.visibility = "hidden";
+  }
+}
 function findAndReplace(jsonObject) {
   var elem = document.querySelector(jsonObject.selector);
   elem.innerHTML = jsonObject.value;
@@ -39,7 +64,8 @@ function findAndReplaceAll(jsonObject) {
 
 function findAndAddStyle(jsonObject) {
   var elem = document.querySelector(jsonObject.selector);
-  elem.setAttribute('class', jsonObject.className);
+  elem.className += ' '+jsonObject.className;
+  console.log(elem);
 }
 
 function findAndAddStyleAll(jsonObject) {
@@ -54,6 +80,11 @@ function addStyle() {
   for (var i = 0; i < elemList.length; i++) {
     elemList[i].style.visibility = "hidden";
   }
+}
+
+function styleAndRemove(jsonObject) {
+  findAndAddStyle(jsonObject);
+  addStyle();
 }
 
 function fetchLocation(jsonObject) {
@@ -72,11 +103,12 @@ function fetchURLParams() {
   }
 }
 
-findAndReplace(jsonUpdate);
-findAndReplaceAll(jsonUpdateAll);
-findAndAddStyle(jsonCSS);
-findAndAddStyleAll(jsonCSS);
-addStyle();
+//findAndReplace(jsonUpdate);
+//findAndReplaceAll(jsonUpdateAll);
+//findAndAddStyle(jsonCSS);
+//findAndAddStyleAll(jsonCSS);
+//addStyle();
+updatePage(jsonPage);
 fetchURLParams();
 
 console.log(paramsURL);
