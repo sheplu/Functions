@@ -28,6 +28,10 @@ var jsonPage = {
     'selector' : `div ul li`,
     'value' : `new liste 1`
   }],
+  hide : [{
+    'selector' : `p`,
+    'className' : `customHidden`
+  }],
   remove : [{
     'selector' : `p`,
     'className' : `customHidden`
@@ -35,6 +39,7 @@ var jsonPage = {
 }
 
 var paramsURL = {};
+var queryString = '';
 
 function updatePage(jsonObject) {
   for (var i = 0; i < jsonObject.update.length; i++) {
@@ -43,13 +48,17 @@ function updatePage(jsonObject) {
       elemUpdate.innerHTML = jsonObject.update[i].value;
     }
   }
-  for (var i = 0; i < jsonObject.remove.length; i++) {
-console.log(jsonObject.remove[i].selector);
-    var elemRemove = document.querySelector(jsonObject.remove[i].selector);
-    if (elemRemove != null) {
-      console.log('null');
-      elemRemove.className += ' '+jsonObject.remove[i].className;
+  for (var i = 0; i < jsonObject.hide.length; i++) {
+console.log(jsonObject.hide[i].selector);
+    var elemHide = document.querySelector(jsonObject.hide[i].selector);
+console.log(elemHide);
+    if (elemHide != null) {
+      elemHide.className += ' '+jsonObject.hide[i].className;
     }
+  }
+  for (var i = 0; i < jsonObject.remove.length; i++) {
+    var elemRemove = document.querySelector(jsonObject.remove[i].selector);
+    elemRemove.parentNode.removeChild(elemRemove);
   }
   var elemList = document.querySelectorAll(".customHidden");
   for (var i = 0; i < elemList.length; i++) {
@@ -99,7 +108,7 @@ function fetchLocation(jsonObject) {
 }
 
 function fetchURLParams() {
-  var queryString = window.location.search;
+  queryString = window.location.search;
   var arrayList = queryString.split('&');
   for (var i = 0; i < arrayList.length; i++) {
     var param = arrayList[i].split('=');
@@ -108,6 +117,10 @@ function fetchURLParams() {
     }
     paramsURL[param[0]] = param[1];
   }
+}
+
+function sendURLParams() {
+  return queryString;
 }
 
 //findAndReplace(jsonUpdate);
@@ -119,3 +132,4 @@ updatePage(jsonPage);
 fetchURLParams();
 
 console.log(paramsURL);
+console.log(queryString);
