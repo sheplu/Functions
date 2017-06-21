@@ -26,7 +26,7 @@ var jsonLocation = {
 var jsonPage = {
   update : [{
     'selector' : `div ul li`,
-    'value' : `<li>new liste 1</li>`
+    'value' : `new liste 1`
   }],
   remove : [{
     'selector' : `p`,
@@ -38,18 +38,25 @@ var paramsURL = {};
 
 function updatePage(jsonObject) {
   for (var i = 0; i < jsonObject.update.length; i++) {
-    var elem = document.querySelector(jsonObject.update[i].selector);
-    elem.innerHTML = jsonObject.update[i].value;
+    var elemUpdate = document.querySelector(jsonObject.update[i].selector);
+    if (elemUpdate != null) {
+      elemUpdate.innerHTML = jsonObject.update[i].value;
+    }
   }
   for (var i = 0; i < jsonObject.remove.length; i++) {
-    var elem = document.querySelector(jsonObject.remove[i].selector);
-    elem.className += ' '+jsonObject.remove[i].className;
+console.log(jsonObject.remove[i].selector);
+    var elemRemove = document.querySelector(jsonObject.remove[i].selector);
+    if (elemRemove != null) {
+      console.log('null');
+      elemRemove.className += ' '+jsonObject.remove[i].className;
+    }
   }
   var elemList = document.querySelectorAll(".customHidden");
   for (var i = 0; i < elemList.length; i++) {
     elemList[i].style.visibility = "hidden";
   }
 }
+
 function findAndReplace(jsonObject) {
   var elem = document.querySelector(jsonObject.selector);
   elem.innerHTML = jsonObject.value;
